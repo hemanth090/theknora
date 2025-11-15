@@ -1,0 +1,41 @@
+app = "knora-backend"
+primary_region = "sin"
+
+[build]
+  dockerfile = "backend/Dockerfile"
+
+[env]
+  RUST_LOG = "info"
+  PORT = "8000"
+  DEFAULT_LLM_MODEL = "mixtral-8x7b-32768"
+  EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+
+[mounts]
+  source = "vector_store"
+  destination = "/app/data/vector_store"
+
+[mounts]
+  source = "uploads"
+  destination = "/app/data/uploads"
+
+[[services]]
+  internal_port = 8000
+  processes = ["app"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [services.http_checks]
+    enabled = true
+    uri = "/api/health"
+    interval = 10000
+    timeout = 5000
+
+[metrics]
+  port = 9090

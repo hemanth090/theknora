@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: knora-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    region: oregon
+    envVars:
+      - key: RUST_LOG
+        value: info
+      - key: PORT
+        value: 8000
+      - key: DEFAULT_LLM_MODEL
+        value: mixtral-8x7b-32768
+      - key: EMBEDDING_MODEL
+        value: all-MiniLM-L6-v2
+      - key: GROQ_API_KEY
+        sync: false
+      - key: AUTH_TOKEN
+        sync: false
+    healthCheckPath: /api/health
+    disk:
+      name: vector-store
+      mountPath: /app/data/vector_store
+      sizeGB: 5
+
+  - type: web
+    name: knora-frontend
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://knora-backend.onrender.com/api
+      - key: NEXT_PUBLIC_AUTH_TOKEN
+        sync: false
+    rootDir: frontend
