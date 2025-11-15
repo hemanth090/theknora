@@ -19,10 +19,6 @@ services:
       - key: AUTH_TOKEN
         sync: false
     healthCheckPath: /api/health
-    disk:
-      name: vector-store
-      mountPath: /app/data/vector_store
-      sizeGB: 5
 
   - type: web
     name: knora-frontend
