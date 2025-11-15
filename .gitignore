@@ -1,0 +1,62 @@
+# Rust
+/backend/target/
+/backend/Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# Node.js
+/frontend/node_modules/
+/frontend/.next/
+/frontend/out/
+/frontend/dist/
+/frontend/.env.local
+/frontend/.env.*.local
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+
+# Vector store data
+/backend/data/vector_store/
+/backend/data/*.json
+/backend/data/*.pkl
+/backend/data/*.bin
+
+# Logs
+logs/
+*.log
+
+# Build artifacts
+dist/
+build/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# OS
+.DS_Store
+Thumbs.db
+.env.*.swp
+
+# Testing
+coverage/
+.nyc_output/
+
+# Cache
+.cache/
+__pycache__/
+*.pyc

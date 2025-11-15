@@ -1,0 +1,123 @@
+KNORA LANDING PAGE - FACT CHECK REPORT
+=====================================
+
+✅ VERIFIED CLAIMS:
+
+1. SUPPORTED FILE FORMATS (10 formats):
+   - PDF ✓
+   - DOCX ✓
+   - DOC ✓
+   - XLSX ✓
+   - XLS ✓
+   - CSV ✓
+   - TXT ✓
+   - MD (Markdown) ✓
+   - PPTX ✓
+   - JSON ✓
+   Source: frontend/components/FileUpload/index.tsx (DEFAULT_FORMATS)
+
+2. FILE SIZE LIMIT:
+   - Max 100MB per file ✓
+   Source: frontend/components/FileUpload/index.tsx (validateFile function)
+
+3. LLM MODELS (5 models via Groq API):
+   - GPT-OSS 120B ✓ (openai/gpt-oss-120b)
+   - LLaMA 3.1 70B ✓ (llama-3.1-70b-versatile)
+   - LLaMA 3.1 8B ✓ (llama-3.1-8b-instant)
+   - Mixtral 8x7B ✓ (mixtral-8x7b-32768)
+   - Gemma2 9B IT ✓ (gemma2-9b-it)
+   Source: backend/src/models.rs (get_supported_models)
+
+4. EMBEDDING MODEL:
+   - all-MiniLM-L6-v2 ✓ (384 dimensions)
+   - Also supports: all-mpnet-base-v2, all-distilroberta-v1, paraphrase variants
+   Source: backend/src/config.rs (EmbeddingModels)
+
+5. LOCAL STORAGE:
+   - Files stored in backend/data/uploads ✓
+   - No cloud storage integration ✓
+   Source: backend file structure and previous analysis
+
+6. TECH STACK:
+   - Backend: Rust + Actix-web ✓
+   - Frontend: Next.js + React ✓
+   - Language: TypeScript ✓
+   - Styling: Tailwind CSS ✓
+   - State: Zustand ✓
+   - HTTP: Axios ✓
+   Source: package.json, Cargo.toml, codebase structure
+
+7. DEFAULT PARAMETERS:
+   - Default chunk size: 1000 ✓
+   - Default chunk overlap: 200 ✓
+   - Default search k: 5 ✓
+   - Default temperature: 0.7 ✓
+   - Default max tokens: 2048 ✓
+   Source: backend/src/config.rs, frontend/lib/store.ts
+
+8. DATA PRIVACY:
+   - All data processed locally ✓
+   - Only document content sent to Groq (for LLM) ✓
+   - File metadata stays on server ✓
+   Source: KnowledgeAnalyticsTab.tsx privacy notice
+
+9. CLEANUP FEATURE:
+   - Can delete individual files ✓
+   - Cleanup removes files older than 30 days ✓
+   Source: KnowledgeAnalyticsTab.tsx (handleCleanupOldFiles)
+
+10. FEATURES:
+    - Drag & drop file upload ✓
+    - Semantic search with embeddings ✓
+    - AI-powered answers ✓
+    - Source attribution ✓
+    - Copy to clipboard ✓
+    - Text-to-speech ✓
+    - Configurable parameters ✓
+    Source: Component implementations
+
+⚠️ NOTES/CLARIFICATIONS:
+
+1. "Lightning Fast" - Groq is indeed fast, but actual speed depends on:
+   - File size and complexity
+   - Document chunking
+   - Network latency
+   - LLM response time
+
+2. "10x Faster Than Manual Review" - Unquantified marketing claim
+   - Not explicitly verified in code
+   - Reasonable but subjective
+
+3. "100% Private" - Technically accurate for files, but:
+   - LLM processing requires Groq API connectivity
+   - Groq API sees document content (not file metadata)
+
+4. Database - Landing says "PostgreSQL" in tech stack but:
+   - Backend uses in-memory vector store with JSON persistence
+   - NOT PostgreSQL
+   - ⚠️ INCORRECT CLAIM
+
+5. Admin UI - Landing doesn't mention, but:
+   - Analytics tab exists (but limited)
+   - Full admin dashboard for file management not present
+
+6. OCR Support - Landing doesn't mention:
+   - Not available for image-only PDFs
+   - Noted as future improvement
+
+⛔ INACCURACIES FOUND:
+
+1. Tech Stack Section Lists "PostgreSQL"
+   - Should be: "In-memory Vector Store (JSON-backed)"
+   - Impact: Low (tech detail, doesn't affect user experience)
+
+2. No mention of limitations:
+   - No offline LLM support (requires Groq API)
+   - No image/OCR extraction
+   - No multi-file batch upload
+
+RECOMMENDATION:
+Update tech stack section to remove PostgreSQL reference and clarify:
+"Vector Store: In-Memory JSON Persistence"
+
+Otherwise, the landing page is accurate and well-represents the product!

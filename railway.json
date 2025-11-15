@@ -1,0 +1,47 @@
+{
+  "name": "KnoRa",
+  "description": "AI Knowledge Assistant - Intelligent Document Analysis with Self-Hosted Deployment",
+  "repo": "https://github.com/hemanth090/theknora.git",
+  "branch": "main",
+  "services": [
+    {
+      "name": "knora-backend",
+      "buildCommand": "cd backend && cargo build --release",
+      "startCommand": "cd backend && cargo run --release",
+      "dockerfile": "backend/Dockerfile",
+      "port": 8000,
+      "variables": {
+        "RUST_LOG": "info",
+        "GROQ_API_KEY": "",
+        "AUTH_TOKEN": "",
+        "DEFAULT_LLM_MODEL": "mixtral-8x7b-32768",
+        "EMBEDDING_MODEL": "all-MiniLM-L6-v2",
+        "PORT": "8000"
+      }
+    },
+    {
+      "name": "knora-frontend",
+      "buildCommand": "cd frontend && npm install && npm run build",
+      "startCommand": "cd frontend && npm start",
+      "port": 3000,
+      "variables": {
+        "NEXT_PUBLIC_API_URL": "${{ services.knora-backend.url }}/api",
+        "NEXT_PUBLIC_AUTH_TOKEN": ""
+      }
+    }
+  ],
+  "volumes": [
+    {
+      "name": "vector-store",
+      "path": "/app/backend/data/vector_store",
+      "size": "5GB"
+    },
+    {
+      "name": "uploads",
+      "path": "/app/backend/data/uploads",
+      "size": "5GB"
+    }
+  ],
+  "databases": [],
+  "plugins": []
+}
